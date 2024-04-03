@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-core
+langchainhub
+langchain-openai
+chromadb
+bs4
+python-dotenv
+ollama
+streamlit
+watchdog
+gradio
+PyPDF2
