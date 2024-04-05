@@ -33,3 +33,8 @@ or copyrighted information.
 4. Point your browser to the URL printed out from the above command
 5. Upload one or more PDF's.
 6. Ask questions.
+
+## Demo
+
+Here is a [screen recording](https://youtu.be/JVlqGH9KSnc?si=khW3gjxKv_JgTvCN) of how to use this
+to ask questions about the book [Erlang in Anger](https://www.erlang-in-anger.com/).
