@@ -26,3 +26,4 @@ msgs = [
 output = ollama.chat(model="llama2", messages=msgs )
 
 print(output["message"]["content"])
+print(output["context"])
