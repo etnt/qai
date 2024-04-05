@@ -3,15 +3,10 @@
 #
 import ollama
 
-prompt = "> Why is the sky blue?"
-print(f"\n{prompt}\n")
-
-msgs  = [
-    {"role": "system",
-     "content": "The user will give you a concept. Explain it to a 5 year old, using descriptive imagery and intersting and fun language."},
-     {"role": "user",
-      "content": "Quantum physics"}]
-
-output = ollama.generate(model="mistral", msgs=msgs)
+msgs = [
+  {"role": "system", "content": "You are a speech writer. Create a speech on the topic that the user provides. It should be witty and fun."},
+  { "role": "user", "content": "Arnold has been working hard is whole life using his hands. He has now turned 50. He has two dogs , a wife and three children. He likes spagetti." }
+]
+output = ollama.chat(model="mistral", messages=msgs )
 
 print(output['message']['content'])
