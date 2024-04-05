@@ -17,7 +17,12 @@ for chunk in output:
 prompt2 = "> Can it be another?"
 print(f"\n{prompt2}\n")
 
-output2 = ollama.generate(model="mistral", prompt=prompt2, context=context, stream=True)
+output2 = ollama.generate(
+    model="mistral",
+    prompt=prompt2,
+    context=context,
+    stream=True
+)
 
 for chunk in output2:
     print(chunk["response"], end="", flush=True)

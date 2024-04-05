@@ -6,9 +6,12 @@ all: pyvenv install-requirements
 qai_pdf:
 	./pyvenv/bin/streamlit run ./src/qai_pdf.py
 
-.PHONY: qai
+.PHONY: qai qpic
 qai:
 	./pyvenv/bin/python3 ./src/qai.py
+
+qpic:
+	./pyvenv/bin/python3 ./src/qpic.py
 #
 # $ . pyvenv/bin/activate
 #
