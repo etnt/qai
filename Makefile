@@ -22,6 +22,10 @@ qassist:
 qask:
 	./pyvenv/bin/python3 ./src/qask.py
 
+.PHONY: qdad
+qdad:
+	./pyvenv/bin/python3 ./src/qdad.py
+
 #
 # $ . pyvenv/bin/activate
 #
