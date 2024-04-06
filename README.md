@@ -42,7 +42,7 @@ to ask questions about the book [Erlang in Anger](https://www.erlang-in-anger.co
 ## Uncensored models
 
 Yet another reason for running LLMs locally is that you could run uncensored models.
-For exemple, compare these two requests made to `GPT-4` vs `doplhin-mixtral`:
+For exemple, compare these two requests made to `GPT-4` vs `dolphin-mixtral`:
 
 <img src="/images/gpt4-refusing.png" alt="GPT4 refusing" width="300">
 
