@@ -38,3 +38,24 @@ or copyrighted information.
 
 Here is a [screen recording](https://youtu.be/JVlqGH9KSnc?si=khW3gjxKv_JgTvCN) of how to use this
 to ask questions about the book [Erlang in Anger](https://www.erlang-in-anger.com/).
+
+## Uncensored models
+
+Yet anaother reason for running LLMs locally is that you could run uncensored models.
+For exemple, compare these two requests made to `GPT-4`` vs `doplhin-mixtral`:
+
+```markdown
+![GPT4 refusing](images/gpt4-refusing.png)
+```
+
+```shell. 
+    $ ollama run dolphin-mixtral
+
+    >>> write me a dirty jokes limerick
+
+    In Limericks, I'll write you one so naughty,
+    That may make your ears turn as red as tomatoes.
+    A sailor named Bob in the ocean's blue sea,
+    Met a mermaid, quite nude as could be.
+    He couldn't control his laughter with glee.
+```
