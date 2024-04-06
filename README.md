@@ -44,9 +44,7 @@ to ask questions about the book [Erlang in Anger](https://www.erlang-in-anger.co
 Yet anaother reason for running LLMs locally is that you could run uncensored models.
 For exemple, compare these two requests made to `GPT-4`` vs `doplhin-mixtral`:
 
-```markdown
 ![GPT4 refusing](images/gpt4-refusing.png)
-```
 
 ```shell. 
     $ ollama run dolphin-mixtral
