@@ -67,23 +67,40 @@ This is just pure fun. A very simple Python program and you can play
 $ make qdad
 ./pyvenv/bin/python3 ./src/qdad.py
 
- As you take your first steps into the forbidden wasteland forest, the air around you grows thick with an unsettling stillness. The sun casts an eerie orange glow through the dense canopy, filtering through the gnarled branches above. A faint hum of magical energy pulses beneath the surface, making the hairs on the back of your neck stand up.
+ As you take your first steps into the forbidden wasteland forest,
+ the air around you grows thick with an unsettling stillness.
+ The sun casts an eerie orange glow through the dense canopy,
+ filtering through the gnarled branches above. A faint hum of
+ magical energy pulses beneath the surface, making the hairs
+ on the back of your neck stand up.
 
-The forest floor is littered with twisted roots and fallen leaves, creating a mosaic of brown and gold underfoot. Mushrooms of all shapes and sizes dot the landscape, their vibrant colors contrasting against the decay. The air smells of damp earth and the faint scent of magic.
+ The forest floor is littered with twisted roots and fallen leaves,
+ creating a mosaic of brown and gold underfoot. Mushrooms of all
+ shapes and sizes dot the landscape, their vibrant colors
+ contrasting against the decay. The air smells of damp earth and
+ the faint scent of magic.
 
-Ahead of you lies a narrow path, leading deeper into the forest. To your left, the trees grow denser, forming a near impenetrable wall. To your right, the undergrowth thins out, revealing a small clearing with a strange stone structure at its center.
+ Ahead of you lies a narrow path, leading deeper into the forest.
+ To your left, the trees grow denser, forming a near impenetrable
+ wall. To your right, the undergrowth thins out, revealing a small
+ clearing with a strange stone structure at its center.
 
-As a level 1 wizard, you have several options:
+ As a level 1 wizard, you have several options:
 
-1. Proceed down the path to explore deeper into the forest.
-2. Cast a Detect Magic spell to investigate the mushrooms and the clearing.
-3. Gather resources, such as herbs or wood, from the area around you.
-4. Return to the safety of civilization before venturing any further.
+ 1. Proceed down the path to explore deeper into the forest.
+ 2. Cast a Detect Magic spell to investigate the mushrooms and the clearing.
+ 3. Gather resources, such as herbs or wood, from the area around you.
+ 4. Return to the safety of civilization before venturing any further.
 
 What would you like to do?
 What do you want to do? 2
 
- You raise your wand, focusing your energy on casting the Detect Magic spell. As the incantation leaves your lips, a soft, shimmering aura extends from your body, revealing the magical properties of the area around you. The mushrooms emit a faint glow, indicating they possess some sort of healing properties. The clearing and the stone structure, however, radiate with a much stronger energy, hinting at something more significant.
+You raise your wand, focusing your energy on casting the Detect Magic spell.
+As the incantation leaves your lips, a soft, shimmering aura extends from
+your body, revealing the magical properties of the area around you.
+The mushrooms emit a faint glow, indicating they possess some sort of
+healing properties. The clearing and the stone structure, however,
+radiate with a much stronger energy, hinting at something more significant.
 
 As you consider the information gained, you have several options:
 
