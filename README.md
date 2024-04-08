@@ -39,6 +39,15 @@ or copyrighted information.
 Here is a [screen recording](https://youtu.be/JVlqGH9KSnc?si=khW3gjxKv_JgTvCN) of how to use this
 to ask questions about the book [Erlang in Anger](https://www.erlang-in-anger.com/).
 
+## Analyse a picture
+
+There is a picture of an Elephant in the data directory. Try it out like this:
+
+1. ollama pull llava
+2. make qpic
+
+Add your own pictures and modify the qpic program...
+
 ## Uncensored models
 
 Yet another reason for running LLMs locally is that you could run uncensored models.
