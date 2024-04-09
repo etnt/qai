@@ -14,6 +14,7 @@ example_json = """
 }
 """
 
+
 template = """
 Here is a question: {question}
 You have access to these tools:
@@ -28,6 +29,8 @@ Here is an example of the JSON formatting for calling a tool:
 
 Action:
 {example_json}
+
+{observation}
 """
 
 
@@ -38,9 +41,9 @@ def main():
     model = os.getenv('USE_MODEL', 'mistral')
 
     chat_history = []  # Initialize your chat history
-    user_input = ""  # Initialize user input
+    observation = ""
     while True:
-        prompt = template.format(question=question, your_thoughts="{your_thoughts}", example_json=example_json)
+        prompt = template.format(question=question, your_thoughts="{your_thoughts}", example_json=example_json, observation=observation)
         output = ollama.generate(model=model, prompt=prompt, stream=False)
         response = output['response'].strip()
         print("")
@@ -48,8 +51,8 @@ def main():
         # Split the response into lines, wrap each line, then join them back together
         print("\n".join([textwrap.fill(line, width=62, break_long_words=False) for line in response.split('\n')]))
         print("")
-        uinput = input(">>> What do you want to do: ")
-        user_input = f"User input: {uinput}"
+        uinput = input(">>> Simulate a search answer: ")
+        observation = f"Observation: {uinput}"
 
 
 if __name__ == "__main__":

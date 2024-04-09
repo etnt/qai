@@ -75,6 +75,50 @@ For exemple, compare these two requests made to `GPT-4` vs `dolphin-mixtral`:
     He couldn't control his laughter with glee.
 ```
 
+## Using Agents
+
+WIP: By designing the prompt in a clever way we can make the LLM ask
+for help from external tools; such a system is called an LLM agent.
+See [also](https://huggingface.co/blog/open-source-llms-as-agents)
+
+```shell
+$ make qagent
+./pyvenv/bin/python3 ./src/qagent.py
+
+Thought: I don't have the information about who got the Nobel
+Prize in Literature in 2023, so I will use the search tool to
+find the answer.
+
+Action:
+{
+    'action': 'search',
+    'action_input': {
+        'query': 'Nobel Prize in Literature 2023 winner'
+    }
+}
+
+>>> Simulate a search answer: The Nobel Prize in Literature 2023 is awarded to the Norwegian author Jon Fosse
+
+Thought: I don't have access to the information about the
+Nobel Prize winner for literature in 2023 yet, so I will use
+the search tool to find the answer.
+
+Action:
+{
+    'action': 'search',
+    'action_input': {
+        'query': 'Nobel Prize in Literature 2023 winner'
+    }
+}
+
+Observation: The Nobel Prize in Literature 2023 is awarded to
+the Norwegian author Jon Fosse.
+
+Final Answer: The Nobel Prize in Literature 2023 was awarded
+to the Norwegian author Jon Fosse.
+```
+
+
 ## Dungeons and Dragons game
 
 This is just pure fun. A very simple Python program and you can play
