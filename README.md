@@ -72,6 +72,14 @@ For exemple, compare these two requests made to `GPT-4` vs `dolphin-mixtral`:
 This is just pure fun. A very simple Python program and you can play
 `Dungeon and Dragons` just as in the good'ol days...
 
+Note: Per default we are using the `mistral` LLM. To try out
+another model you can do:
+
+```shell
+ollama pull starling-lm
+env USE_MODEL="starling-lm" make qdad
+```
+
 ``` shell.
 $ make qdad 
 ./pyvenv/bin/python3 ./src/qdad.py 
