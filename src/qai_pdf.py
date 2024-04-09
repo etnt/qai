@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import PyPDF2
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import OllamaEmbeddings
@@ -58,7 +59,11 @@ if st.session_state['splits']:
         embedding=OllamaEmbeddings(model="nomic-embed-text")
     )
     retriever = vectorstore.as_retriever()
-    model_local = ChatOllama(model="mistral")
+
+    # Get the value of the environment variable 'USE_MODEL'
+    # If 'USE_MODEL' is not set or is empty, use 'default_value' instead
+    model = os.getenv('USE_MODEL', 'mistral')
+    model_local = ChatOllama(model=model)
 
     after_rag_template = """Answer the question based only on the following context:
         {context}

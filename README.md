@@ -34,6 +34,14 @@ or copyrighted information.
 5. Upload one or more PDF's.
 6. Ask questions.
 
+Note: Per default we are using the `mistral` LLM. To try out
+another model you can do:
+
+```shell
+ollama pull starling-lm
+env USE_MODEL="starling-lm" make qdad
+```
+
 ## Demo
 
 Here is a [screen recording](https://youtu.be/JVlqGH9KSnc?si=khW3gjxKv_JgTvCN) of how to use this
