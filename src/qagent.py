@@ -3,7 +3,7 @@ import os
 import ollama
 import textwrap
 
-question = "Who got the Nobel Prize in Litterature in 2023?"
+question = "Who got the Nobel Prize in Literature in 2023?"
 
 example_json = """
 {
