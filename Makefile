@@ -26,6 +26,10 @@ qask:
 qdad:
 	./pyvenv/bin/python3 ./src/qdad.py
 
+.PHONY: qagent
+qagent:
+	./pyvenv/bin/python3 ./src/qagent.py
+
 #
 # $ . pyvenv/bin/activate
 #
