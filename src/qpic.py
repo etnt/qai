@@ -16,7 +16,7 @@ print(output['response'])
 
 context = output['context']
 
-prompt2 = "> Are there any watermarks in the picture and if so where is it located? If you are not sure then say no."
+prompt2 = "> What continent is the animal living in?"
 print(f"\n{prompt2}\n")
 
 output2 = ollama.generate(
