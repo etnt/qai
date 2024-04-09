@@ -1,52 +1,48 @@
 #
 # A Dungeon and Dragons game.
 #
+import os
 import ollama
+import textwrap
 
-# Initialize the game state
-game_state = [
-    {
-    "role": "system", 
-    "content": """
-    You are a Dungeon Master. Narrate a Dungeons and Dragons game. 
+
+template = """
+    You are a Dungeon Master that will narrate a Dungeons and Dragons game. 
     You describe the surroundings and present the user with a few options of what the user can do. 
     The user can pick up artifacts, cast spells and fight with weapons.
-    You will interpret the user's actions and narrate the outcome base on the user input.
-    The game is turned based so you must wait for the user to make a move before you can respond.
-    You will continue the game until the user decides to quit.
+    Your goal is to interpret the user's actions and narrate the outcome based on the user input.
+
+    Here are some rules to follow:
+    1. Start by asking what character the user is playing.
+    2. Describe the surroundings and present the user with a few options.
+    3. Interpret the user's actions and narrate the outcome.
+    
+    Here is the chat history; use this to understand what to say next: {chat_history}
+    {user_input}
     """
-    },
-    {"role": "user", "content": "I want to start a new game. I am a level 1 wizard. I have just stopped in front of a wast forrest."},
-]
+
+
 
 def main():
+    # Get the value of the environment variable 'MY_ENV_VAR'
+    # If 'MY_ENV_VAR' is not set or is empty, use 'default_value' instead
+    model = os.getenv('USE_MODEL', 'mistral')
+
+    chat_history = []  # Initialize your chat history
+    user_input = ""  # Initialize user input
     while True:
-        # Use the ollama.chat function to generate the Dungeon Master's response
-        output = ollama.chat(model="mistral", messages=game_state)
+        prompt = template.format(chat_history=chat_history, user_input=user_input)
+        output = ollama.generate(model=model, prompt=prompt, stream=False)
+        response = output['response'].strip()
+        chat_history.append(response)  # Update chat history
+        print("")
+        # To make the text easier to read, we wrap it to a maximum width of 62 characters.
+        # Split the response into lines, wrap each line, then join them back together
+        print("\n".join([textwrap.fill(line, width=62, break_long_words=False) for line in response.split('\n')]))
+        print("")
+        uinput = input(">>> What do you want to do: ")
+        user_input = f"User input: {uinput}"
 
-        # Print the Dungeon Master's response
-        print(output['message']['content'])
-
-        # Add the Dungeon Master's response to the game state
-        game_state.append({"role": "system", "content": output['message']['content']})
-
-        # Get the player's action
-        action = input("What do you want to do? ")
-
-        # Replace the new User action to the game state
-        for i, item in enumerate(game_state):
-            if item['role'] == 'user':
-                game_state[i] = {"role": "user", "content": action}
-                break
-
-        # Use the ollama.chat function to interpret the action
-        output = ollama.chat(model="mistral", messages=game_state)
-
-        # Print the interpretation
-        print(output['message']['content'])
-
-        # Add the interpretation to the game state
-        #game_state.append({"role": "system", "content": output['message']['content']})
 
 if __name__ == "__main__":
     main()

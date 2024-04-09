@@ -11,3 +11,5 @@ streamlit
 watchdog
 gradio
 PyPDF2
+textwrap
+

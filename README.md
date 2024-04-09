@@ -73,50 +73,85 @@ This is just pure fun. A very simple Python program and you can play
 `Dungeon and Dragons` just as in the good'ol days...
 
 ``` shell.
-$ make qdad
-./pyvenv/bin/python3 ./src/qdad.py
+$ make qdad 
+./pyvenv/bin/python3 ./src/qdad.py 
+ 
+Greetings, brave adventurer! I see you're standing at the 
+entrance of an ancient tomb, shrouded in the mystical gloom of 
+a moonless night. The air is heavy with the scent of damp 
+earth and decaying foliage. Before you lies a massive stone 
+door, adorned with intricate carvings that depict scenes of 
+fierce battles and mythical creatures. 
+ 
+As you take a moment to survey your surroundings, I present 
+you with the following options: 
+ 
+1) Attempt to force open the stone door with all your might. 
+2) Search for any hidden mechanisms or clues that may reveal 
+the entrance's secret. 
+3) Call upon your deity for divine intervention in unlocking 
+this tomb. 
+4) Retreat and gather allies or resources before attempting 
+entry. 
+ 
+Which path would you like to take, valiant adventurer? 
+ 
+>>> What do you want to do: search for hidden mechanisms 
+ 
+As you turn your gaze from the stone door, your keen eyes scan 
+the area around it. The dim light of the torches flickers 
+across the surface of the tomb, revealing small cracks and 
+crevices in the ancient stone. You notice a peculiar pattern 
+on one side of the door - three interlocking gears that seem 
+to be part of some sort of mechanism. 
 
- As you take your first steps into the forbidden wasteland forest,
- the air around you grows thick with an unsettling stillness.
- The sun casts an eerie orange glow through the dense canopy,
- filtering through the gnarled branches above. A faint hum of
- magical energy pulses beneath the surface, making the hairs
- on the back of your neck stand up.
+You reach out to touch the carvings, feeling the rough texture
+of the stone beneath your fingers. As you trace the lines of
+the gears with your mind, you begin to sense a faint hum of
+energy coursing through them. With a renewed sense of purpose,
+you focus your attention on the mechanism.
 
- The forest floor is littered with twisted roots and fallen leaves,
- creating a mosaic of brown and gold underfoot. Mushrooms of all
- shapes and sizes dot the landscape, their vibrant colors
- contrasting against the decay. The air smells of damp earth and
- the faint scent of magic.
+As you continue to explore the hidden workings of the door,
+the hum grows louder and more distinct. Suddenly, you hear the
+sound of grating stone as the gears shift and realign. The
+heavy stone door begins to creak open, revealing a dark and
+narrow passageway beyond. The air inside is stale and thick
+with dust, but there's a faint glimmer of light that beckons
+you forward.
 
- Ahead of you lies a narrow path, leading deeper into the forest.
- To your left, the trees grow denser, forming a near impenetrable
- wall. To your right, the undergrowth thins out, revealing a small
- clearing with a strange stone structure at its center.
+Congratulations, adventurer! You have discovered the secret
+entrance to this ancient tomb. What would you like to do next?
+[1) Enter the tomb.\n2) Search for more hidden mechanisms or
+clues before entering.\n3) Call upon your allies or summon
+help before proceeding.
 
- As a level 1 wizard, you have several options:
-
- 1. Proceed down the path to explore deeper into the forest.
- 2. Cast a Detect Magic spell to investigate the mushrooms and the clearing.
- 3. Gather resources, such as herbs or wood, from the area around you.
- 4. Return to the safety of civilization before venturing any further.
-
-What would you like to do?
-What do you want to do? 2
-
-You raise your wand, focusing your energy on casting the Detect Magic spell.
-As the incantation leaves your lips, a soft, shimmering aura extends from
-your body, revealing the magical properties of the area around you.
-The mushrooms emit a faint glow, indicating they possess some sort of
-healing properties. The clearing and the stone structure, however,
-radiate with a much stronger energy, hinting at something more significant.
-
-As you consider the information gained, you have several options:
-
-1. Approach the mushrooms to gather them for potential use or study.
-2. Investigate the mysterious stone structure in the clearing.
-3. Return to the edge of the forest and reassess your next move.
-
-What would you like to do? 2 (Approach the stone structure)
-What do you want to do? 
+>>> What do you want to do: enter the tomb 
+ 
+As you step through the now fully open door, the dim light 
+from the torches outside barely reaches into the tomb, leaving 
+the passageway shrouded in darkness. You take a deep breath 
+and draw your weapon, preparing yourself for whatever lies 
+ahead. The air in the tomb is stale and musty, and the silence 
+is broken only by the sound of your own footsteps echoing off 
+the damp stone walls. 
+ 
+As you move deeper into the tomb, you notice that the 
+passageway splits into several different corridors. To your 
+left, you see a narrow corridor leading to what looks like a 
+library or archive room. To your right, there's a wider 
+hallway with large statues on either side, and at the end of 
+it, you can make out the outline of a throne room. Straight 
+ahead, the passageway continues deeper into the tomb. 
+ 
+Which path would you like to take, brave adventurer? [1) 
+Explore the library or archive room.\n2) Approach the statues 
+in the wider hallway.\n3) Continue deeper into the tomb.] 
+ 
+>>> What do you want to do: explore the library 
+ 
+As you turn left and follow the narrow corridor, the dim light 
+from your torch reveals shelves upon shelves of ancient tomes 
+and scrolls. The air is thick with the scent of parchment and 
+dust. You can see the faint outlines of figures hunched over 
+...
 ```
