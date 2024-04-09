@@ -24,8 +24,8 @@ template = """
 
 
 def main():
-    # Get the value of the environment variable 'MY_ENV_VAR'
-    # If 'MY_ENV_VAR' is not set or is empty, use 'default_value' instead
+    # Get the value of the environment variable 'USE_MODEL'
+    # If 'USE_MODEL' is not set or is empty, use 'default_value' instead
     model = os.getenv('USE_MODEL', 'mistral')
 
     chat_history = []  # Initialize your chat history
