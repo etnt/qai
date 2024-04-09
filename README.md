@@ -82,6 +82,7 @@ for help from external tools; such a system is called an LLM agent.
 See [also](https://huggingface.co/blog/open-source-llms-as-agents)
 
 ```shell
+# question = "Who got the Nobel Prize in Litterature in 2023?"
 $ make qagent
 ./pyvenv/bin/python3 ./src/qagent.py
 
