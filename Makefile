@@ -34,6 +34,10 @@ qagent:
 qtest:
 	./pyvenv/bin/python3 ./src/test_qutils.py
 
+.PHONY: qutils
+qutils:
+	./pyvenv/bin/python3 ./src/qutils.py
+
 #
 # $ . pyvenv/bin/activate
 #

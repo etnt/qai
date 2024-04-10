@@ -77,46 +77,33 @@ For exemple, compare these two requests made to `GPT-4` vs `dolphin-mixtral`:
 
 ## Using Agents
 
-WIP: By designing the prompt in a clever way we can make the LLM ask
+By designing the prompt in a clever way we can make the LLM ask
 for help from external tools; such a system is called an LLM agent.
 See [also](https://huggingface.co/blog/open-source-llms-as-agents)
 
+Here we have made it possible for the LLM to request help with
+doing a search query and then returning some relevant content
+that the LLM can make use of to formulate an answer.
+
 ```shell
-# question = "Who got the Nobel Prize in Literature in 2023?"
 $ make qagent
 ./pyvenv/bin/python3 ./src/qagent.py
+Enter a question: Who won the Nobel prize in Physics 2023? Tell me something about the motiviation for getting the prize.
+Answer:
+ According to my search results, Pierre Agostini from The Ohio
+State University, Ferenc Krausz from Max Planck Institute of
+Quantum Optics, and Anne L'Huillier from Lund University won
+the Nobel Prize in Physics 2023. They were awarded for
+"experimental methods that generate attosecond pulses of light
+for the study of electron dynamics in matter."
 
-Thought: I don't have the information about who got the Nobel
-Prize in Literature in 2023, so I will use the search tool to
-find the answer.
-
-Action:
-{
-    'action': 'search',
-    'action_input': {
-        'query': 'Nobel Prize in Literature 2023 winner'
-    }
-}
-
->>> Simulate a search answer: The Nobel Prize in Literature 2023 is awarded to the Norwegian author Jon Fosse
-
-Thought: I don't have access to the information about the
-Nobel Prize winner for literature in 2023 yet, so I will use
-the search tool to find the answer.
-
-Action:
-{
-    'action': 'search',
-    'action_input': {
-        'query': 'Nobel Prize in Literature 2023 winner'
-    }
-}
-
-Observation: The Nobel Prize in Literature 2023 is awarded to
-the Norwegian author Jon Fosse.
-
-Final Answer: The Nobel Prize in Literature 2023 was awarded
-to the Norwegian author Jon Fosse.
+# Compare the above with asking the (mistral) model directly:
+#
+$ ollama run mistral
+>>> Who won the Nobel prize in Physics 2023? Tell me something about the motiviation for getting the prize.
+ I apologize for any confusion, but as of now, the Nobel Prizes for 2023 have not been announced yet. The Nobel Prizes are awarded annually, and the winners are typically announced between October
+and December. Therefore, it is currently impossible to provide information about who won the Nobel Prize in Physics 2023 or the motivation behind their work. I suggest checking back later for 
+updates.
 ```
 
 
