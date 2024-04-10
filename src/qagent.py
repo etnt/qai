@@ -1,9 +1,9 @@
-# https://huggingface.co/blog/open-source-llms-as-agents
+# See also: https://huggingface.co/blog/open-source-llms-as-agents
 import os
 import ollama
 import textwrap
 from googlesearch import search
-from qutils import extract_json_objects, VectorStore
+from qutils import extract_json_objects, VectorStore, print_verbose
 
 
 
@@ -61,24 +61,24 @@ def main():
         if 'Action:' in response:
             # Convert it to proper JSON format
             json_text = response.replace("'", '"')
+
             # Extract JSON objects
             for data in extract_json_objects(json_text):
-                print("<info> Extracted JSON object: ", data)
+                print_verbose("<info> Extracted JSON object: ", data)
+
                 # If the JSON object contains an 'action_input' key, and 'query' is in 'action_input',
                 # perform a Google search and store the content in the VectorStore, then perform a
                 # similarity search.
                 if 'action_input' in data and 'query' in data['action_input']:
                     query = data['action_input']['query']
-                    print(f"<info> Performing Google search for: {query}")
+                    print_verbose(f"<info> Performing Google search for: {query}")
                     v = VectorStore()
                     v.search_and_store(query)
-                    similarity_result = v.similarity_search(query=query, num_results=1)
-                    search_result = similarity_result[0].page_content.strip()
+                    similarity_result = v.similarity_search(query=query, num_results=3)
+                    search_result = "\n".join([result.page_content.strip() for result in similarity_result])
 
         if search_result:
             observation = f"Observation: {search_result}"
-        #print(f"<<< {observation}")
-        #print("")
 
 
 if __name__ == "__main__":
