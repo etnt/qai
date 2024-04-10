@@ -74,7 +74,7 @@ def main():
                     print_verbose(f"<info> Performing Google search for: {query}")
                     v = VectorStore()
                     v.search_and_store(query)
-                    similarity_result = v.similarity_search(query=query, num_results=3)
+                    similarity_result = v.similarity_search(query=query, num_results=2)
                     search_result = "\n".join([result.page_content.strip() for result in similarity_result])
 
         if search_result:

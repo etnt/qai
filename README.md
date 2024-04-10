@@ -86,6 +86,18 @@ doing a search query and then returning some relevant content
 that the LLM can make use of to formulate an answer.
 
 ```shell
+#
+# Let's ask a question that our LLM doesn't know the answer to.
+#
+$ ollama run mistral
+>>> Who won the Nobel prize in Physics 2023? Tell me something about the motiviation for getting the prize.
+ I apologize for any confusion, but as of now, the Nobel Prizes for 2023 have not been announced yet. The Nobel Prizes are awarded annually, and the winners are typically announced between October
+and December. Therefore, it is currently impossible to provide information about who won the Nobel Prize in Physics 2023 or the motivation behind their work. I suggest checking back later for 
+updates.
+
+#
+# Now as the same question when our LLM can take help from an external Agent.
+#
 $ make qagent
 ./pyvenv/bin/python3 ./src/qagent.py
 Enter a question: Who won the Nobel prize in Physics 2023? Tell me something about the motiviation for getting the prize.
@@ -97,13 +109,26 @@ the Nobel Prize in Physics 2023. They were awarded for
 "experimental methods that generate attosecond pulses of light
 for the study of electron dynamics in matter."
 
-# Compare the above with asking the (mistral) model directly:
 #
-$ ollama run mistral
->>> Who won the Nobel prize in Physics 2023? Tell me something about the motiviation for getting the prize.
- I apologize for any confusion, but as of now, the Nobel Prizes for 2023 have not been announced yet. The Nobel Prizes are awarded annually, and the winners are typically announced between October
-and December. Therefore, it is currently impossible to provide information about who won the Nobel Prize in Physics 2023 or the motivation behind their work. I suggest checking back later for 
-updates.
+# Turn on some verbose output to see what it does
+#
+$ env QAI_VERBOSE=true make qagent
+./pyvenv/bin/python3 ./src/qagent.py
+Enter a question: Who won the Nobel prize in Medicine 2023? Tell me about the motivation behind the prize.
+<info> Extracted JSON object:  {'action': 'search', 'action_input': {'query': 'Nobel prize in Medicine 2023 winner'}}
+<info> Performing Google search for: Nobel prize in Medicine 2023 winner
+<info> (0) Extracting content from: https://www.nobelprize.org/prizes/medicine/2023/press-release/
+<info> (1) Extracting content from: https://www.nobelprize.org/prizes/medicine/2023/kariko/facts/
+<info> (2) Extracting content from: https://en.wikipedia.org/wiki/2023_Nobel_Prize_in_Physiology_or_Medicine
+<info> (3) Extracting content from: https://www.nobelprize.org/prizes/medicine/
+<info> (4) Extracting content from: https://ki.se/en/about/the-nobel-prize-in-physiology-or-medicine
+<info> (5) Extracting content from: https://www.nobelprize.org/prizes/medicine/2023/advanced-information/
+Answer:
+ Katalin Karikó and Drew Weissman won the Nobel Prize in
+Physiology or Medicine 2023 for their discoveries concerning
+nucleoside base modifications that enabled the development of
+effective mRNA vaccines against COVID-19. These discoveries
+were critical during the pandemic that began in early 2020.
 ```
 
 

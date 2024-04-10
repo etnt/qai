@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from googlesearch import search
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from typing import (
     TYPE_CHECKING,
@@ -108,10 +109,11 @@ class VectorStore:
         ids = []
         for index, url in enumerate(search(query, num_results)):
             print_verbose(f"<info> ({index}) Extracting content from: {url}")
-            text = self.extract_content(url)
-            documents.append(text)
-            metadatas.append({'source': url})
-            ids.append(f"id{index}")
+            text_splits = self.extract_content(url)
+            for jindex, text in enumerate(text_splits):
+                documents.append(text)
+                metadatas.append({'source': url})
+                ids.append(f"id{index}.{jindex}")
 
         self.db = Chroma.from_texts(
             documents,
@@ -120,7 +122,7 @@ class VectorStore:
             embedding=self.embedding_model
         )
 
-    def extract_content(self, url: str) -> str:
+    def extract_content(self, url: str) -> List[str]:
         """
         Extracts the content from the given URL.
 
@@ -133,7 +135,12 @@ class VectorStore:
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
         text = ' '.join([p.text for p in soup.find_all('p')])  # Extract text from <p> tags
-        return text
+
+        # We need to split it up into smaller pieces
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+        text_splits = text_splitter.split_text(text)
+
+        return text_splits
 
     def similarity_search(self, query: str, num_results: int = 1) -> List[Document]:
         """
