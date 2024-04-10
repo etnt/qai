@@ -2,6 +2,7 @@
 import os
 import ollama
 import textwrap
+from qutils import extract_json_objects
 
 question = "Who got the Nobel Prize in Literature in 2023?"
 
@@ -35,6 +36,7 @@ Action:
 
 
 
+
 def main():
     # Get the value of the environment variable 'USE_MODEL'
     # If 'USE_MODEL' is not set or is empty, use 'default_value' instead
@@ -51,6 +53,22 @@ def main():
         # Split the response into lines, wrap each line, then join them back together
         print("\n".join([textwrap.fill(line, width=62, break_long_words=False) for line in response.split('\n')]))
         print("")
+
+        # Check if the response contains 'Final Answer:'
+        if 'Final Answer:' in response:
+            # Split the response at 'Final Answer:' and print the second part
+            final_answer = response.split('Final Answer:', 1)[1]
+            print("Answer: ", final_answer.strip())
+            break  # Exit the loop
+
+        # Check if the response contains 'Action:'
+        if 'Action:' in response:
+            # Convert it to proper JSON format
+            json_text = response.replace("'", '"')
+            # Extract JSON objects
+            for data in extract_json_objects(json_text):
+                print("Extracted JSON object: ", data)
+
         uinput = input(">>> Simulate a search answer: ")
         observation = f"Observation: {uinput}"
 

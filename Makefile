@@ -30,6 +30,10 @@ qdad:
 qagent:
 	./pyvenv/bin/python3 ./src/qagent.py
 
+.PHONY: qtest
+qtest:
+	./pyvenv/bin/python3 ./src/test_qutils.py
+
 #
 # $ . pyvenv/bin/activate
 #
