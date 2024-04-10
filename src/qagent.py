@@ -2,6 +2,7 @@
 import os
 import ollama
 import textwrap
+from googlesearch import search
 from qutils import extract_json_objects
 
 question = "Who got the Nobel Prize in Literature in 2023?"
@@ -46,6 +47,9 @@ def main():
     observation = ""
     while True:
         prompt = template.format(question=question, your_thoughts="{your_thoughts}", example_json=example_json, observation=observation)
+        print("--- PROMPT:")
+        print(prompt)
+        print("---")
         output = ollama.generate(model=model, prompt=prompt, stream=False)
         response = output['response'].strip()
         print("")
@@ -61,6 +65,7 @@ def main():
             print("Answer: ", final_answer.strip())
             break  # Exit the loop
 
+        search_result = ""
         # Check if the response contains 'Action:'
         if 'Action:' in response:
             # Convert it to proper JSON format
@@ -68,9 +73,16 @@ def main():
             # Extract JSON objects
             for data in extract_json_objects(json_text):
                 print("Extracted JSON object: ", data)
+                # If the JSON object contains an 'action_input' key, and 'query' is in 'action_input', perform a Google search
+                if 'action_input' in data and 'query' in data['action_input']:
+                    query = data['action_input']['query']
+                    print(f"Performing Google search for: {query}")
+                    for j in search(query, num_results=5):
+                        search_result += j + "\n"
 
-        uinput = input(">>> Simulate a search answer: ")
-        observation = f"Observation: {uinput}"
+        #uinput = input(">>> Simulate a search answer: ")
+        if search_result:
+            observation = f"Observation: {search_result}"
 
 
 if __name__ == "__main__":
