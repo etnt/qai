@@ -131,6 +131,121 @@ effective mRNA vaccines against COVID-19. These discoveries
 were critical during the pandemic that began in early 2020.
 ```
 
+## Similarity search using a Vector Store
+
+Chroma is a database for building AI applications with embeddings.
+We have used it before, in the Agent example. Her we will use it again
+to search through a [Movie Dataset](https://www.kaggle.com/datasets/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows?resource=download).
+
+Put the dataset, like this: "./data/imdb_top_1000.csv"
+(or point it out with the --csv-file switch)
+
+### What are embeddings?
+
+In the context of artificial intelligence (AI), "embeddings" refer
+to mathematical representations of objects, concepts, or entities
+in a continuous vector space. 
+
+Embeddings are used to encode raw data, such as words, sentences,
+images, or even entire documents, into a format that a machine
+learning model can understand and process effectively. By mapping
+data into a continuous vector space, embeddings capture semantic
+similarities and relationships between different items.
+For example, words with similar meanings or contexts will have
+similar vector representations in an embedding space.
+
+### Searching for similar Movies
+
+In this example we are using the Chroma DB to store entries from
+a Movie dataset. We can then search for Movies similar to a number
+of search criteras, such as:
+
+"""shell
+$ ./pyvenv/bin/python3 ./src/qimdb.py --help
+usage: qimdb.py [-h] [--title TITLE] [--genre GENRE] [--rating RATING] [--stars STARS] [--director DIRECTOR] [--release-year RELEASE_YEAR] [--story STORY]
+                [--db-dir DB_DIR] [--csv-file CSV_FILE] [--num-of-results NUM_OF_RESULTS]
+
+Search for similar Movies
+
+options:
+  -h, --help            show this help message and exit
+  --title TITLE         Title of the movie
+  --genre GENRE         Genre of the movie. Possible values are: Music, Action, Crime, Romance, Mystery, War, Sci-Fi, Fantasy, Animation, Drama, Western,
+                        Adventure, Family, Film-Noir, Musical, Comedy, Horror, Thriller, Sport, Biography, History
+  --rating RATING       IMDB rating of the movie
+  --stars STARS         Stars of the movie (separated by comma)
+  --director DIRECTOR   Director of the movie
+  --release-year RELEASE_YEAR
+                        Release year of the movie
+  --story STORY         Story of the movie
+  --db-dir DB_DIR       Directory where to store the VectorStore DB
+  --csv-file CSV_FILE   Location of CSV file
+  --num-of-results NUM_OF_RESULTS
+                        Number of returned results
+"""
+
+So in the example below we search for Movies with an IMDB rating around 8,
+a story containing: "bank robber" and the genre should be "Drama.
+
+Not that the first time we run the program it will create and populate
+the Chroma DB, which will take some time. After that each search will be
+fast.
+
+"""shell
+$ time ./pyvenv/bin/python3 ./src/qimdb.py --rating 8 --story "bank robber" --genre Drama
+Storing into VectorStore as: qimdb
+
+Title: Bin-jip
+Rating: 8
+Genre: Crime, Drama, Romance
+Starring: Seung-Yun Lee, Hee Jae, Hyuk-ho Kwon
+Story: A transient young man breaks into empty homes to partake of the vacationing residents' lives for a few days.
+
+Title: Special Chabbis
+Rating: 8
+Genre: Crime, Drama, Thriller
+Starring: Akshay Kumar, Anupam Kher, Manoj Bajpayee
+Story: A gang of con-men rob prominent rich businessmen and politicians by posing as C.B.I and income tax officers.
+
+Title: Sling Blade
+Rating: 8
+Genre: Drama
+Starring: Billy Bob Thornton, Dwight Yoakam, J.T. Walsh
+Story: Karl Childers, a simple man hospitalized since his childhood murder of his mother and her lover, is released to start a new life in a small town.
+
+real    0m26.285s
+user    0m5.105s
+sys     0m2.797s
+
+
+#
+# DO THE SAME SEARCH WHICH NOW WILL USE THE EXISTING DB
+#
+$ time ./pyvenv/bin/python3 ./src/qimdb.py --rating 8 --story "bank robber" --genre Drama
+Using existing VectorStore at: qimdb
+
+Title: Bin-jip
+Rating: 8
+Genre: Crime, Drama, Romance
+Starring: Seung-Yun Lee, Hee Jae, Hyuk-ho Kwon
+Story: A transient young man breaks into empty homes to partake of the vacationing residents' lives for a few days.
+
+Title: Special Chabbis
+Rating: 8
+Genre: Crime, Drama, Thriller
+Starring: Akshay Kumar, Anupam Kher, Manoj Bajpayee
+Story: A gang of con-men rob prominent rich businessmen and politicians by posing as C.B.I and income tax officers.
+
+Title: Sling Blade
+Rating: 8
+Genre: Drama
+Starring: Billy Bob Thornton, Dwight Yoakam, J.T. Walsh
+Story: Karl Childers, a simple man hospitalized since his childhood murder of his mother and her lover, is released to start a new life in a small town.
+
+real    0m1.595s
+user    0m1.006s
+sys     0m2.022s
+"""
 
 ## Dungeons and Dragons game
 

@@ -7,6 +7,9 @@ from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
+import threading
+import time
+import itertools
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -18,6 +21,29 @@ from typing import (
     Tuple,
     Type,
 )
+
+
+
+
+class Spinner:
+    def __init__(self, message='Loading...'):
+        self.spinner = itertools.cycle(['-', '/', '|', '\\'])
+        self.thread = threading.Thread(target=self.spin)
+        self.running = False
+        self.message = message
+
+    def start(self):
+        self.running = True
+        self.thread.start()
+
+    def spin(self):
+        while self.running:
+            print(next(self.spinner), end='\r')
+            time.sleep(0.1)
+
+    def stop(self):
+        self.running = False
+        self.thread.join()
 
 
 def print_verbose(*args) -> None:
@@ -88,9 +114,18 @@ class VectorStore:
         embedding_model (OllamaEmbeddings): The embedding model used for vectorization.
     """
 
-    def __init__(self):
-        self.db = None
+    def __init__(self, persist_directory: Optional[str] = None):
+        
         self.embedding_model = OllamaEmbeddings(model="nomic-embed-text")
+
+        if persist_directory and os.path.isdir(persist_directory):
+            self.db = Chroma(
+                embedding_function=self.embedding_model,
+                persist_directory=persist_directory
+                )
+        else:
+            self.db = None
+        
 
     def search_and_store(self, query: str, num_results: int = 5) -> None:
         """
@@ -115,11 +150,26 @@ class VectorStore:
                 metadatas.append({'source': url})
                 ids.append(f"id{index}.{jindex}")
 
+        self.store(documents, metadatas, ids)
+
+    def store(self, documents: List[str], metadatas: List[dict], ids: List[str], persist_directory: Optional[str] = None) -> None:
+        """
+        Store the given documents, metadatas, and ids in the database.
+
+        Args:
+            documents (List[str]): The list of documents to store.
+            metadatas (List[dict]): The list of metadata dictionaries corresponding to each document.
+            ids (List[str]): The list of ids corresponding to each document.
+
+        Returns:
+            None
+        """
         self.db = Chroma.from_texts(
             documents,
             metadatas=metadatas,
             ids=ids,
-            embedding=self.embedding_model
+            embedding=self.embedding_model,
+            persist_directory=persist_directory
         )
 
     def extract_content(self, url: str) -> List[str]:
