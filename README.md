@@ -1,5 +1,5 @@
 # QAI - Questions and Answers using AI
-> Run ollama locally and upload your docs; ask questions
+> Run ollama locally and implement some example AI applications
 
 ## Table of Contents
 1. [Ollama](#ollama)
