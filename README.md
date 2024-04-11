@@ -201,7 +201,7 @@ options:
 So in the example below we search for Movies with an IMDB rating around 8,
 a story containing: "bank robber" and the genre should be "Drama".
 
-Not that the first time we run the program it will create and populate
+Note that the first time we run the program it will create and populate
 the Chroma DB, which will take some time. After that each search will be
 fast.
 
