@@ -1,6 +1,20 @@
 # QAI - Questions and Answers using AI
 > Run ollama locally and upload your docs; ask questions
 
+## Table of Contents
+1. [Ollama](#ollama)
+   1. [Install and Run](#install-and-run)
+2. [Demo](#demo)
+3. [Analyse a picture](#analyse-a-picture)
+4. [Uncensored models](#uncensored-models)
+5. [Using Agents](#using-agents)
+6. [Similarity search using a Vector Store](#similarity-search-using-a-vector-store)
+   1. [What are embeddings?](#what-are-embeddings)
+   2. [Searching for similar Movies](#searching-for-similar-movies)
+7. [Dungeons and Dragons game](#dungeons-and-dragons-game)
+
+## Ollama
+
 [Ollama](https://ollama.com) allows you to run open-source large language models (LLM) locally.
 
 LLM's excel at extracting information from pre-existing online sources like
@@ -24,7 +38,7 @@ your uploaded documents.
 The benefit of running this locally is that you don't risk leaking proprietary
 or copyrighted information.
 
-## Install and Run
+### Install and Run
 
 1. Download and install Ollama: https://ollama.com/download (make sure to install the ollama CLI as well)
 2. Install the LLM: `ollama pull mistral`
@@ -185,7 +199,7 @@ options:
 ```
 
 So in the example below we search for Movies with an IMDB rating around 8,
-a story containing: "bank robber" and the genre should be "Drama.
+a story containing: "bank robber" and the genre should be "Drama".
 
 Not that the first time we run the program it will create and populate
 the Chroma DB, which will take some time. After that each search will be
