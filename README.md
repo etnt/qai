@@ -134,7 +134,7 @@ were critical during the pandemic that began in early 2020.
 ## Similarity search using a Vector Store
 
 Chroma is a database for building AI applications with embeddings.
-We have used it before, in the Agent example. Her we will use it again
+We have used it before, in the Agent example. Here we will use it again
 to search through a [Movie Dataset](https://www.kaggle.com/datasets/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows?resource=download).
 
 Put the dataset, like this: "./data/imdb_top_1000.csv"
@@ -160,7 +160,7 @@ In this example we are using the Chroma DB to store entries from
 a Movie dataset. We can then search for Movies similar to a number
 of search criteras, such as:
 
-"""shell
+```shell
 $ ./pyvenv/bin/python3 ./src/qimdb.py --help
 usage: qimdb.py [-h] [--title TITLE] [--genre GENRE] [--rating RATING] [--stars STARS] [--director DIRECTOR] [--release-year RELEASE_YEAR] [--story STORY]
                 [--db-dir DB_DIR] [--csv-file CSV_FILE] [--num-of-results NUM_OF_RESULTS]
@@ -182,7 +182,7 @@ options:
   --csv-file CSV_FILE   Location of CSV file
   --num-of-results NUM_OF_RESULTS
                         Number of returned results
-"""
+```
 
 So in the example below we search for Movies with an IMDB rating around 8,
 a story containing: "bank robber" and the genre should be "Drama.
@@ -191,7 +191,7 @@ Not that the first time we run the program it will create and populate
 the Chroma DB, which will take some time. After that each search will be
 fast.
 
-"""shell
+```shell
 $ time ./pyvenv/bin/python3 ./src/qimdb.py --rating 8 --story "bank robber" --genre Drama
 Storing into VectorStore as: qimdb
 
@@ -245,7 +245,7 @@ Story: Karl Childers, a simple man hospitalized since his childhood murder of hi
 real    0m1.595s
 user    0m1.006s
 sys     0m2.022s
-"""
+```
 
 ## Dungeons and Dragons game
 
