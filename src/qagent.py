@@ -1,4 +1,6 @@
-# See also: https://huggingface.co/blog/open-source-llms-as-agents
+# See also:
+#  https://huggingface.co/blog/open-source-llms-as-agents
+#  https://iamajithkumar.medium.com/working-with-faiss-for-similarity-search-59b197690f6c
 import os
 import ollama
 import textwrap
