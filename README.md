@@ -8,6 +8,8 @@
 3. [Analyse a picture](#analyse-a-picture)
 4. [Uncensored models](#uncensored-models)
 5. [Using Agents](#using-agents)
+   1. [A Google Search Agent](#a-google-search-agent)
+   2. [A Drawing Agent](#a-drawing-agent)
 6. [Similarity search using a Vector Store](#similarity-search-using-a-vector-store)
    1. [What are embeddings?](#what-are-embeddings)
    2. [Searching for similar Movies](#searching-for-similar-movies)
@@ -155,7 +157,7 @@ the instructions we give it. It is working far from perfect at the moment:
 env USE_MODEL="starling-lm" make qdraw
 ```
 
-<img src="/images/gdraw.png" alt="qdraw" width="400">
+<img src="/images/qdraw.png" alt="qdraw" width="400">
 
 We were using the `starling-lm` model which seem to work a little better
 than the `mistral` model. But it would be interesting to try out more models.
