@@ -12,4 +12,8 @@ watchdog
 gradio
 PyPDF2
 googlesearch-python
+tk
+PythonTurtle
+
+
 

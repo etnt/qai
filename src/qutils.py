@@ -7,6 +7,7 @@ from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
+import tkinter as tk
 import threading
 import time
 import itertools
@@ -99,7 +100,8 @@ def extract_json_objects(text, decoder=json.JSONDecoder()) -> Iterable[Dict[str,
             result, index = decoder.raw_decode(text[match:])
             yield result
             pos = match + index
-        except ValueError:
+        except ValueError as e:
+            print_verbose(f"<error> extract_json_objects: {e}")
             pos = match + 1
 
 
@@ -206,8 +208,7 @@ class VectorStore:
         results = self.db.similarity_search(query=query, k=num_results)
         return results
     
-# Example usage
-if __name__ == "__main__":
+def example_similarity_search():
     v = VectorStore()
     query = "Who got the Nobel Prize in Literature in 2023?"
     v.search_and_store(query)
@@ -215,3 +216,65 @@ if __name__ == "__main__":
     if similar_results:
         print(similar_results[0].page_content)
 
+
+example_draw_instructions = """
+Action:
+{
+    'action': 'draw',
+    'instructions': [
+        {'draw_line': [10,10,100,100]},
+        {'draw_line': [10,100,100,10]}
+    ]
+}
+"""
+
+
+class Painter():
+    def __init__(self, title: Optional[str] = "Title"):
+        self.root = root = tk.Tk()
+        self.root.title(title)
+        self.canvas = tk.Canvas(self.root, width=400, height=300, bg="white")
+        self.canvas.pack(fill="both", expand=True)
+
+    def draw_line(self, x1, y1, x2, y2) -> None:
+        self.canvas.create_line(x1, y1, x2, y2, fill="black", width=2)
+
+    def draw_circle(self, x, y, r):
+        self.canvas.create_oval(x-r, y-r, x+r, y+r, outline="black", width=2)
+
+    def handle_instruction(self, instruction: Dict) -> None:
+        if 'draw_line' in instruction:
+            # Unpack the list
+            x1, y1, x2, y2 = instruction['draw_line']
+            # Perform the drawing operation
+            self.draw_line(x1, y1, x2, y2)
+
+        if 'draw_circle' in instruction:
+            # Unpack the data
+            x, y = instruction['draw_circle']['center']
+            r = instruction['draw_circle']['radius']
+            # Perform the drawing operation
+            self.draw_circle(x, y, r)
+
+    def start(self):
+        self.root.mainloop()
+
+
+# Example usage
+if __name__ == "__main__":
+    p = Painter("Drawing Example")
+    
+    json_text = example_draw_instructions.replace("'", '"')
+    # Extract JSON objects
+    for data in extract_json_objects(json_text):
+        print_verbose(f"<info> Extracted JSON object: {data}")
+
+        # If the JSON object contains an 'action_input' key, and 'query' is in 'action_input',
+        # perform a Google search and store the content in the VectorStore, then perform a
+        # similarity search.
+        if 'action' in data and 'draw' in data['action']:
+            instructions = data['instructions']
+            for instruction in instructions:
+                p.handle_instruction(instruction)
+    
+    p.start()

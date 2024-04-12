@@ -32,7 +32,7 @@ qagent:
 
 .PHONY: qimdb
 qimdb:
-	./pyvenv/bin/python3 ./src/qimdb.py
+	./pyvenv/bin/python3 ./src/qimdb.py 
 
 .PHONY: qtest
 qtest:
@@ -42,11 +42,16 @@ qtest:
 qutils:
 	./pyvenv/bin/python3 ./src/qutils.py
 
+.PHONY: qdraw
+qdraw:
+	./pyvenv/bin/python3 ./src/qdraw.py
+
 #
 # $ . pyvenv/bin/activate
 #
 pyvenv:
-	virtualenv $@
+	#virtualenv $@
+	python3 -m venv --system-site-packages $@
 	$@/bin/pip $(PIP_OPTS) install pip --upgrade
 
 
