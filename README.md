@@ -95,6 +95,7 @@ By designing the prompt in a clever way we can make the LLM ask
 for help from external tools; such a system is called an LLM agent.
 See [also](https://huggingface.co/blog/open-source-llms-as-agents)
 
+### A Google Search Agent
 Here we have made it possible for the LLM to request help with
 doing a search query and then returning some relevant content
 that the LLM can make use of to formulate an answer.
@@ -144,6 +145,21 @@ nucleoside base modifications that enabled the development of
 effective mRNA vaccines against COVID-19. These discoveries
 were critical during the pandemic that began in early 2020.
 ```
+
+### A Drawing Agent
+
+Here we are trying to make the LLM do simple drawings according to
+the instructions we give it. It is working far from perfect at the moment:
+
+```shell
+env USE_MODEL="starling-lm" make qdraw
+```
+
+<img src="/images/gdraw.png" alt="qdraw" width="400">
+
+We were using the `starling-lm` model which seem to work a little better
+than the `mistral` model. But it would be interesting to try out more models.
+
 
 ## Similarity search using a Vector Store
 

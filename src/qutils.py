@@ -230,10 +230,10 @@ Action:
 
 
 class Painter():
-    def __init__(self, title: Optional[str] = "Title"):
+    def __init__(self, title: Optional[str] = "Title", width: Optional[int] = 800, height: Optional[int] = 600):
         self.root = root = tk.Tk()
         self.root.title(title)
-        self.canvas = tk.Canvas(self.root, width=400, height=300, bg="white")
+        self.canvas = tk.Canvas(self.root, width=width, height=height, bg="white")
         self.canvas.pack(fill="both", expand=True)
 
     def draw_line(self, x1, y1, x2, y2) -> None:
@@ -247,14 +247,18 @@ class Painter():
             # Unpack the list
             x1, y1, x2, y2 = instruction['draw_line']
             # Perform the drawing operation
+            print_verbose(f"draw_line: x1={x1},y1={y1},x2={x2},y2={y2}")
             self.draw_line(x1, y1, x2, y2)
+            return
 
         if 'draw_circle' in instruction:
             # Unpack the data
             x, y = instruction['draw_circle']['center']
             r = instruction['draw_circle']['radius']
             # Perform the drawing operation
+            print_verbose(f"draw_circle: x={x},y={y},r={r}")
             self.draw_circle(x, y, r)
+            return
 
     def start(self):
         self.root.mainloop()
