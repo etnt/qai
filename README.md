@@ -194,11 +194,19 @@ I added a `draw_text` operation as well, and had the following conversation:
 ```text
 Enter a question: What is an SDL diagram?
 
-An SDL (Specification and Description Language) diagram is a graphical representation used for defining system processes. SDL is a formal language used in computer science and it is particularly good at describing asynchronous systems. These diagrams are used to explain processes, systems, and real-time applications. SDL diagrams represent a system as a set of interconnected extended finite state machines that communicate with each other via channels. It's used in telecommunications, automotive, aviation, and software industries, among others.
+An SDL (Specification and Description Language) diagram is a graphical representation
+used for defining system processes. SDL is a formal language used in computer science
+and it is particularly good at describing asynchronous systems. These diagrams are used
+to explain processes, systems, and real-time applications. SDL diagrams represent a
+system as a set of interconnected extended finite state machines that communicate with
+each other via channels. It's used in telecommunications, automotive, aviation, and
+software industries, among others.
 
 Enter a question: Can you give an example of a SDL symbol?
 
-Sure, I can provide you with an example of a SDL symbol. A commonly used symbol in SDL diagrams is the "process" symbol. It is usually represented as a rectangle with rounded corners.
+Sure, I can provide you with an example of a SDL symbol. A commonly used symbol in
+SDL diagrams is the "process" symbol. It is usually represented as a rectangle with
+rounded corners.
 
    ...here it drew a rectangle with the text 'Process' inside...
 
