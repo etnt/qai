@@ -229,8 +229,8 @@ class Painter():
         self.color = "black"
         self.width = 1
 
-    def draw_line(self, x1, y1, x2, y2) -> None:
-        self.canvas.create_line(x1, y1, x2, y2, fill=self.color, width=self.width)
+    def draw_line(self, points: List[Tuple]) -> None:
+        self.canvas.create_line(points, fill=self.color, width=self.width)
 
     def draw_circle(self, x, y, r):
         self.canvas.create_oval(x-r, y-r, x+r, y+r, outline=self.color, width=self.width)
@@ -247,17 +247,20 @@ class Painter():
     def draw_polygon(self, points: List[Dict]):
         self.canvas.create_polygon(points, outline=self.color, fill="", width=self.width)
 
+    def draw_text(self, x, y, text):
+        self.canvas.create_text(x, y, text=text, fill=self.color)
+
     def set_color(self, color):
         self.color = color
 
 
     def handle_instruction(self, instruction: Dict) -> None:
         if 'draw_line' in instruction:
-            # Unpack the list
-            x1, y1, x2, y2 = instruction['draw_line']
+            # Unpack the points to be of type: List[tuple]
+            points = [tuple(point) for point in instruction['draw_line']['points']]
             # Perform the drawing operation
-            print_verbose(f"draw_line: x1={x1},y1={y1},x2={x2},y2={y2}")
-            self.draw_line(x1, y1, x2, y2)
+            print_verbose(f"draw_line: points={points}")
+            self.draw_line(points)
             return
 
         if 'draw_circle' in instruction:
@@ -305,6 +308,15 @@ class Painter():
             self.draw_curve(points)
             return
         
+        if 'draw_text' in instruction:
+            # Unpack the text and the position where to center it. 
+            x, y = instruction['draw_text']['position']
+            text = instruction['draw_text']['text']
+            # Perform the drawing operation
+            print_verbose(f"draw_text: text={text}")
+            self.draw_text(x, y, text)
+            return
+        
         if 'set_color' in instruction:
             # Unpack the color
             color = instruction['set_color']
@@ -324,6 +336,7 @@ Action:
     'instructions': [
         {'draw_triangle': {'points': [[100, 30], [30, 70], [130, 100]]}},
         {'draw_line': [10,100,100,10]},
+        {'draw_text': {'position': [50,40], 'text': 'Example text'}}
         {'set_color': 'blue'},
         {'draw_polygon': {'points': [[110, 40], [40, 90], [140, 120], [200,200]]}},
         {'draw_sinus': {'start': [20,200], 'range': [0, 360, 5, 100]}}

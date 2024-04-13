@@ -4,6 +4,7 @@ from langchain.schema import BaseOutputParser
 from dotenv import load_dotenv
 import os
 from qutils import extract_json_objects, Painter, print_verbose
+import time
 
 # Make sure to create an ./python/.env file and put the OpenAI API key in it, like:
 #
@@ -22,7 +23,8 @@ example_json = """
     'action': 'draw',
     'instructions': [
         {'draw_triangle': {'points': [[100, 30], [30, 70], [130, 100]]}},
-        {'draw_line': [10,100,100,10]},
+        {'draw_line': {'points': [[10,100], [100,10]]},
+        {'draw_text': {'position': [50,40], 'text': 'Example text'}},
         {'set_color': 'blue'},
         {'draw_polygon': {'points': [[110, 40], [40, 90], [140, 120], [200,200]]}},
         {'draw_sinus': {'start': [20,200], 'range': [0, 360, 5, 100]}}
@@ -40,6 +42,7 @@ You have access to a drawing tool that can perform the following operations:
   - draw_curve : This operation draws a curve between a set of points, where the points are represented as pairs of integers: [(X1,Y1), (X2,Y2), ... , (Xn,Yn)]
   - draw_polygon : This operation draws lines between a set of points, ending at the starting point, where the points are represented as pairs of integers: [(X1,Y1), (X2,Y2), ... , (Xn,Yn)]
   - draw_sinus : This operation draws a sinus curve starting at the point: (X,Y) ,ranging from a Start degree to a Stop degree taking steps of Step degrees ,and where the Y position is scaled by Yscale  
+  - draw_text : This operation will draw a text the Text is centered vertically and horizontally around position (X, Y) , newlines are represented as '\n'
   - set_color : This operation sets the color for the upcoming draw operations.
 
 Here follows your instructions:
@@ -84,7 +87,11 @@ def main():
             )
 
         # Call Chat-GPT
+        start_time = time.time()
         result = chat_model.invoke(messages)
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print_verbose(f"The code took {elapsed_time} seconds to execute.")
         response = result.content
         print_verbose(f"<info> response = {response}")
 
