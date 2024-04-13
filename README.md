@@ -227,13 +227,21 @@ Enter a question: Yes, please draw a Decision symbol
 
    ...here it drew a diamond with the text 'Decision' inside...
 
-Enter a question: Nice, however it collided with a previous symbol. Could you re-draw it a bit further down?
+Enter a question: Nice, however it collided with a previous symbol.
+Could you re-draw it a bit further down?
 
    ...here it re-drew a diamond with the text 'Decision' inside a bit furter down...
 ```
 
 <img src="/images/qdraw-sdl.png" alt="qdraw" width="300">
 
+This is just so fun. Let's do one more:
+
+```text
+Can you draw an outline of a bicycle?
+```
+
+<img src="/images/qdraw-bicycle.png" alt="qdraw" width="300">
 
 ## Similarity search using a Vector Store
 

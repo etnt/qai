@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 from qutils import extract_json_objects, Painter, print_verbose
 import time
+import re
 
 # Make sure to create an ./python/.env file and put the OpenAI API key in it, like:
 #
@@ -54,6 +55,14 @@ Here follows your instructions:
 6. Do not produce any textual explanations, only JSON.
 7. Indicate the JSON output by beginning the output with a single line containing: Action:
 8. At the bottom of this instruction you will find the chat history that you can make use of to improve your output.
+9. Any (additional) text response should be output between a line starting with 'START-TEXT:' and a line 'END-TEXT:'
+
+Here follows an example of a text response:
+
+START-TEXT:
+This is some example text
+spanning two lines.
+END-TEXT:
 
 Here follows an example of JSON data containing drawing instructions:
 
@@ -75,6 +84,8 @@ chat_prompt = ChatPromptTemplate.from_messages([
 def main():
     p = Painter("AI Drawing Tool")
     chat_history = []  # Initialize the chat history
+    start_marker = 'START-TEXT:'
+    end_marker = 'END-TEXT:'
 
     while True:
         question = input("Enter a question: ")
@@ -94,6 +105,12 @@ def main():
         print_verbose(f"The code took {elapsed_time} seconds to execute.")
         response = result.content
         print_verbose(f"<info> response = {response}")
+
+        # Print any textual response.
+        match = re.search(f'{start_marker}(.*?){end_marker}', response, re.DOTALL)
+        if match:
+            extracted_text = match.group(1).strip()
+            print(extracted_text)
 
         # Update the Chat History
         chat_history.append(question)
@@ -115,8 +132,6 @@ def main():
                 instructions = data['instructions']
                 for instruction in instructions:
                     p.handle_instruction(instruction)
-        else:
-            print(response)
 
 
 if __name__ == "__main__":
