@@ -176,7 +176,7 @@ Draw a bounding box that encloses all the previous drawings.
 
 You can even discuss with GPT-4 what drawing actions it would like to have:
 
-<img src="/images/qdraw-more-tools.png" alt="qdraw" width="400">
+<img src="/images/qdraw-more-actions.png" alt="qdraw" width="400">
 
 
 ## Similarity search using a Vector Store
