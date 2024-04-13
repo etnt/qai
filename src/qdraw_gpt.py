@@ -21,9 +21,11 @@ example_json = """
 {
     'action': 'draw',
     'instructions': [
-        {'draw_line': [10,10,100,100]},
+        {'draw_triangle': {'points': [[100, 30], [30, 70], [130, 100]]}},
         {'draw_line': [10,100,100,10]},
-        {'draw_circle': {'center': [150, 75], 'radius': 25}}
+        {'set_color': 'blue'},
+        {'draw_polygon': {'points': [[110, 40], [40, 90], [140, 120], [200,200]]}},
+        {'draw_sinus': {'start': [20,200], 'range': [0, 360, 5, 100]}}
     ]
 }
 """
@@ -32,8 +34,13 @@ system_template = """
 Your goal is to make drawings based on the user input.
 
 You have access to a drawing tool that can perform the following operations:
-  - draw_line : the operation draws a line between two points, here represented as two pairs of integers: (X1,Y1) and (X2,Y2)
-  - draw_circle : the operation draws a circle with center: (X,Y) ,and a radius of: R
+  - draw_line : This operation draws a line between two points, here represented as two pairs of integers: (X1,Y1) and (X2,Y2)
+  - draw_circle : This operation draws a circle with center: (X,Y) ,and a radius of: R
+  - draw_triangle : This operation draws a triangle where each corner is defined as a list of points: [(X1,Y1), (X2,Y2), (X3,Y3)]
+  - draw_curve : This operation draws a curve between a set of points, where the points are represented as pairs of integers: [(X1,Y1), (X2,Y2), ... , (Xn,Yn)]
+  - draw_polygon : This operation draws lines between a set of points, ending at the starting point, where the points are represented as pairs of integers: [(X1,Y1), (X2,Y2), ... , (Xn,Yn)]
+  - draw_sinus : This operation draws a sinus curve starting at the point: (X,Y) ,ranging from a Start degree to a Stop degree taking steps of Step degrees ,and where the Y position is scaled by Yscale  
+  - set_color : This operation sets the color for the upcoming draw operations.
 
 Here follows your instructions:
 1. The drawing tool is operationg within a reversed cartesian coordinate system where the X-axis is pointing to the right and the Y-axis is pointing down and where the origin is at (0,0)

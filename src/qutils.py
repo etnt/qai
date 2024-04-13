@@ -11,6 +11,7 @@ import tkinter as tk
 import threading
 import time
 import itertools
+import math
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -217,16 +218,6 @@ def example_similarity_search():
         print(similar_results[0].page_content)
 
 
-example_draw_instructions = """
-Action:
-{
-    'action': 'draw',
-    'instructions': [
-        {'draw_line': [10,10,100,100]},
-        {'draw_line': [10,100,100,10]}
-    ]
-}
-"""
 
 
 class Painter():
@@ -235,12 +226,30 @@ class Painter():
         self.root.title(title)
         self.canvas = tk.Canvas(self.root, width=width, height=height, bg="white")
         self.canvas.pack(fill="both", expand=True)
+        self.color = "black"
+        self.width = 1
 
     def draw_line(self, x1, y1, x2, y2) -> None:
-        self.canvas.create_line(x1, y1, x2, y2, fill="black", width=2)
+        self.canvas.create_line(x1, y1, x2, y2, fill=self.color, width=self.width)
 
     def draw_circle(self, x, y, r):
-        self.canvas.create_oval(x-r, y-r, x+r, y+r, outline="black", width=2)
+        self.canvas.create_oval(x-r, y-r, x+r, y+r, outline=self.color, width=self.width)
+
+    def draw_point(self, x, y):
+        self.canvas.create_oval(x, y, x+1, y+1, outline=self.color, fill=self.color)
+
+    def draw_curve(self, points: List[Dict]) -> None:
+        self.canvas.create_line(points, fill=self.color, width=self.width)
+
+    def draw_triangle(self, points: List[Dict]):
+        self.canvas.create_polygon(points, outline=self.color, fill="", width=self.width)
+
+    def draw_polygon(self, points: List[Dict]):
+        self.canvas.create_polygon(points, outline=self.color, fill="", width=self.width)
+
+    def set_color(self, color):
+        self.color = color
+
 
     def handle_instruction(self, instruction: Dict) -> None:
         if 'draw_line' in instruction:
@@ -259,10 +268,68 @@ class Painter():
             print_verbose(f"draw_circle: x={x},y={y},r={r}")
             self.draw_circle(x, y, r)
             return
+        
+        if 'draw_curve' in instruction:
+            # Unpack the points to be of type: List[tuple]
+            points = [tuple(point) for point in instruction['draw_curve']['points']]
+            # Perform the drawing operation
+            print_verbose(f"draw_curve: points={points}")
+            self.draw_curve(points)
+            return
+        
+        if 'draw_triangle' in instruction:
+            # Unpack the points to be of type: List[tuple]
+            points = [tuple(point) for point in instruction['draw_triangle']['points']]
+            # Perform the drawing operation
+            print_verbose(f"draw_triangle: points={points}")
+            self.draw_triangle(points)
+            return
+        
+        if 'draw_polygon' in instruction:
+            # Unpack the points to be of type: List[tuple]
+            points = [tuple(point) for point in instruction['draw_polygon']['points']]
+            # Perform the drawing operation
+            print_verbose(f"draw_polygon: points={points}")
+            self.draw_polygon(points)
+            return
+        
+        if 'draw_sinus' in instruction:
+            # Unpack the data which is a range from Start to Stop degrees with a step of Step degrees 
+            start, stop, step, yscale = instruction['draw_sinus']['range']
+            xoff, yoff = instruction['draw_sinus']['start']
+            # Generate the points
+            x_range = range(start, stop, step)  # From 0 to 360 degrees with a step of 5 degrees
+            points = [(x+xoff, (math.sin(math.radians(x))*yscale) + yoff) for x in x_range]
+            # Perform the drawing operation
+            print_verbose(f"draw_curve: points={points}")
+            self.draw_curve(points)
+            return
+        
+        if 'set_color' in instruction:
+            # Unpack the color
+            color = instruction['set_color']
+            # Perform the drawing operation
+            print_verbose(f"draw_color: {color}")
+            self.set_color(color)
+            return
 
     def start(self):
         self.root.mainloop()
 
+
+example_draw_instructions = """
+Action:
+{
+    'action': 'draw',
+    'instructions': [
+        {'draw_triangle': {'points': [[100, 30], [30, 70], [130, 100]]}},
+        {'draw_line': [10,100,100,10]},
+        {'set_color': 'blue'},
+        {'draw_polygon': {'points': [[110, 40], [40, 90], [140, 120], [200,200]]}},
+        {'draw_sinus': {'start': [20,200], 'range': [0, 360, 5, 100]}}
+    ]
+}
+"""
 
 # Example usage
 if __name__ == "__main__":

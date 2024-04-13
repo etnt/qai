@@ -178,6 +178,17 @@ You can even discuss with GPT-4 what drawing actions it would like to have:
 
 <img src="/images/qdraw-more-actions.png" alt="qdraw" width="400">
 
+So then I just had to implement some more primitives, e.g `draw_sinus`, `draw_polygon`, `set_color`.
+Then I asked the questions:
+
+```shell
+Draw a triangle starting at position x=100,y=100 with an approximated area of 60
+Draw a blue sinus curve starting at: x=30,y=200 with an amplitude of 100
+Draw a random polygon in red color
+```
+
+<img src="/images/qdraw-gpt4-v2.png" alt="qdraw" width="300">
+
 
 ## Similarity search using a Vector Store
 
