@@ -28,7 +28,8 @@ example_json = """
         {'draw_text': {'position': [50,40], 'text': 'Example text'}},
         {'set_color': 'blue'},
         {'draw_polygon': {'points': [[110, 40], [40, 90], [140, 120], [200,200]]}},
-        {'draw_sinus': {'start': [20,200], 'range': [0, 360, 5, 100]}}
+        {'draw_sinus': {'start': [20,200], 'range': [0, 360, 5, 100]}},
+        {'clear_all': null}
     ]
 }
 """
@@ -45,6 +46,7 @@ You have access to a drawing tool that can perform the following operations:
   - draw_sinus : This operation draws a sinus curve starting at the point: (X,Y) ,ranging from a Start degree to a Stop degree taking steps of Step degrees ,and where the Y position is scaled by Yscale  
   - draw_text : This operation will draw a text the Text is centered vertically and horizontally around position (X, Y) , newlines are represented as '\n'
   - set_color : This operation sets the color for the upcoming draw operations.
+  - clear_all : This operation remove all drawn objects from the drawing canvas.
 
 Here follows your instructions:
 1. The drawing tool is operationg within a reversed cartesian coordinate system where the X-axis is pointing to the right and the Y-axis is pointing down and where the origin is at (0,0)

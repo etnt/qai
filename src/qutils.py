@@ -253,6 +253,9 @@ class Painter():
     def set_color(self, color):
         self.color = color
 
+    def clear_all(self):
+        self.canvas.delete("all")
+
 
     def handle_instruction(self, instruction: Dict) -> None:
         if 'draw_line' in instruction:
@@ -324,6 +327,9 @@ class Painter():
             print_verbose(f"draw_color: {color}")
             self.set_color(color)
             return
+
+        if 'clear_all' in instruction:
+            self.clear_all()
 
     def start(self):
         self.root.mainloop()
