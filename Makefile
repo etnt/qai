@@ -46,6 +46,10 @@ qutils:
 qdraw:
 	./pyvenv/bin/python3 ./src/qdraw.py
 
+.PHONY: qdraw_gpt
+qdraw_gpt:
+	./pyvenv/bin/python3 ./src/qdraw_gpt.py
+
 #
 # $ . pyvenv/bin/activate
 #
