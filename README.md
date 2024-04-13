@@ -169,9 +169,10 @@ The questions we asked was:
 Draw a circle with a center at: x=200,y=200 and a radius of: 100
 Draw a box with the upper left corner at: x=300,y=300 and the sides of length: 100
 Draw a line from the center of the circle to the center of the box.
+Draw a bounding box that encloses all the previous drawings.
 ```
 
-<img src="/images/qdraw-gpt.png" alt="qdraw" width="300">
+<img src="/images/qdraw-gpt4.png" alt="qdraw" width="300">
 
 
 ## Similarity search using a Vector Store
