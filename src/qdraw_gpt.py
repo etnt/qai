@@ -3,7 +3,7 @@ from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
 from dotenv import load_dotenv
 import os
-from qutils import extract_json_objects, Painter, print_verbose
+from qutils import extract_json_objects, Painter, print_verbose, log_execution_time
 import time
 import re
 
@@ -82,6 +82,9 @@ chat_prompt = ChatPromptTemplate.from_messages([
     ("human" , user_template)
 ])
 
+@log_execution_time
+def invoke_chat_model(messages):
+    return chat_model.invoke(messages)
 
 def main():
     p = Painter("AI Drawing Tool")
@@ -101,7 +104,7 @@ def main():
 
         # Call Chat-GPT
         start_time = time.time()
-        result = chat_model.invoke(messages)
+        result = invoke_chat_model(messages)
         end_time = time.time()
         elapsed_time = end_time - start_time
         print_verbose(f"The code took {elapsed_time} seconds to execute.")

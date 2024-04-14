@@ -12,6 +12,8 @@ import threading
 import time
 import itertools
 import math
+import functools
+import logging
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -24,7 +26,22 @@ from typing import (
     Type,
 )
 
+logging.basicConfig(level=logging.INFO, format='%(name)s : %(levelname)-8s : %(message)s')
+logger = logging.getLogger(__name__)
 
+def log_execution_time(func):
+    """Decorator to log the execution time of a function."""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        logger.info(f"{func.__name__} executed in {execution_time:.4f} seconds")
+        return result
+
+    return wrapper
 
 
 class Spinner:

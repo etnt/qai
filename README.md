@@ -253,6 +253,31 @@ Can you draw an outline of a bicycle?
 
 <img src="/images/qdraw-bicycle.png" alt="qdraw" width="300">
 
+And another one:
+
+```text
+Draw a straw man
+```
+
+<img src="/images/qdraw-straw-man.png" alt="qdraw" width="300">
+
+So the straw man resulted in the following instructions being issued:
+
+```
+{
+    'action': 'draw',
+    'instructions': [
+        {'set_color': 'black'},
+        {'draw_circle': {'center': [150, 50], 'radius': 25}},
+        {'draw_line': {'points': [[150,75], [150,150]]}},
+        {'draw_line': {'points': [[150,100], [120,130]]}},
+        {'draw_line': {'points': [[150,100], [180,130]]}},
+        {'draw_line': {'points': [[150,150], [120,200]]}},
+        {'draw_line': {'points': [[150,150], [180,200]]}}
+    ]
+}
+```
+
 ## Similarity search using a Vector Store
 
 Chroma is a database for building AI applications with embeddings.
