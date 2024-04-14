@@ -2,18 +2,28 @@
 > Run ollama locally and implement some example AI applications
 
 ## Table of Contents
-1. [Ollama](#ollama)
+1. [Introduction](#introduction)
+2. [Ollama](#ollama)
    1. [Install and Run](#install-and-run)
-2. [Demo](#demo)
-3. [Analyse a picture](#analyse-a-picture)
-4. [Uncensored models](#uncensored-models)
-5. [Using Agents](#using-agents)
+3. [Demo](#demo)
+4. [Analyse a picture](#analyse-a-picture)
+5. [Uncensored models](#uncensored-models)
+6. [Using Agents](#using-agents)
    1. [A Google Search Agent](#a-google-search-agent)
    2. [A Drawing Agent](#a-drawing-agent)
-6. [Similarity search using a Vector Store](#similarity-search-using-a-vector-store)
+7. [Similarity search using a Vector Store](#similarity-search-using-a-vector-store)
    1. [What are embeddings?](#what-are-embeddings)
    2. [Searching for similar Movies](#searching-for-similar-movies)
 7. [Dungeons and Dragons game](#dungeons-and-dragons-game)
+
+## Introduction
+
+This is a collection of simple Python scripts that interact with an LLM
+to create some application. The intention is to get a better understanding
+of this technology and how it can be used.
+
+An interesting discussion with GPT4 about what a GPT system is can be found
+[here](GPT_HOWTO.md)
 
 ## Ollama
 
