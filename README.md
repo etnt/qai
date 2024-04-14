@@ -19,7 +19,7 @@
 ## Introduction
 
 This is a collection of simple Python scripts that interact with an LLM
-to create some application. The intention is to get a better understanding
+to create some applications. The intention is to get a better understanding
 of this technology and how it can be used.
 
 An interesting discussion with GPT4 about what a GPT system is can be found
