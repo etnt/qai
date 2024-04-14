@@ -45,7 +45,7 @@ You have access to a drawing tool that can perform the following operations:
   - draw_polygon : This operation draws lines between a set of points, ending at the starting point, where the points are represented as pairs of integers: [(X1,Y1), (X2,Y2), ... , (Xn,Yn)]
   - draw_sinus : This operation draws a sinus curve starting at the point: (X,Y) ,ranging from a Start degree to a Stop degree taking steps of Step degrees ,and where the Y position is scaled by Yscale  
   - draw_text : This operation will draw a text the Text is centered vertically and horizontally around position (X, Y) , newlines are represented as '\n'
-  - set_color : This operation sets the color for the upcoming draw operations.
+  - set_color : This operation sets the color for the upcoming draw operations where color names must be valid Tkinter color names.
   - clear_all : This operation remove all drawn objects from the drawing canvas.
 
 Here follows your instructions:

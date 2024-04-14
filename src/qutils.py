@@ -26,7 +26,7 @@ from typing import (
     Type,
 )
 
-logging.basicConfig(level=logging.INFO, format='%(name)s : %(levelname)-8s : %(message)s')
+logging.basicConfig(filename="logs/qdraw.log", level=logging.INFO, format='%(name)s : %(levelname)-8s : %(message)s')
 logger = logging.getLogger(__name__)
 
 def log_execution_time(func):
