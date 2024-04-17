@@ -24,6 +24,7 @@ example_json = """
     'action': 'draw',
     'instructions': [
         {'draw_triangle': {'points': [[100, 30], [30, 70], [130, 100]]}},
+        {'draw_circle': {'center': [150, 75], 'radius': 25}},
         {'draw_line': {'points': [[10,100], [100,10]]},
         {'draw_text': {'position': [50,40], 'text': 'Example text'}},
         {'set_color': 'blue'},

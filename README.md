@@ -278,6 +278,18 @@ So the straw man resulted in the following instructions being issued:
 }
 ```
 
+Here is an American Fotball related instruction:
+
+```text
+Create a Wing-T formation with 11 players detailing a run play to the right,
+with the offensive line blocking the defense, The offensive team would
+be "O" and the defense with "X"
+```
+
+<img src="/images/qdraw-wing-T.png" alt="qdraw" width="300">
+
+
+
 ## Similarity search using a Vector Store
 
 Chroma is a database for building AI applications with embeddings.

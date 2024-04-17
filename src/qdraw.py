@@ -10,17 +10,16 @@ example_json = """
 {
     'action': 'draw',
     'instructions': [
-        {'draw_line': [10,10,100,100]},
-        {'draw_line': [10,100,100,10]},
+        {'draw_line': {'points': [[10,100], [100,10]]},
         {'draw_circle': {'center': [150, 75], 'radius': 25}}
     ]
 }
 """
 
 template = """
-Here is the user input: {question}
+Here is the user query: {question}
 
-Your goal is to make drawings based on the user input.
+Your goal is to make drawings based on the user query.
 
 You have access to a drawing tool that can perform the following operations:
   - draw_line : the operation draws a line between two points, here represented as two pairs of integers: (X1,Y1) and (X2,Y2)
@@ -62,7 +61,7 @@ def main():
         output = ollama.generate(model=model, prompt=prompt, stream=False)
         response = output['response'].strip()
         chat_history.append(response)
-        #print_verbose(f"<info> response = {response}")
+        print_verbose(f"<info> response = {response}")
 
         # Check if the response contains 'Action:'
         if 'Action:' in response:
