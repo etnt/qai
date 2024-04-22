@@ -26,7 +26,7 @@ from typing import (
     Type,
 )
 
-logging.basicConfig(filename="logs/qdraw.log", level=logging.INFO, format='%(name)s : %(levelname)-8s : %(message)s')
+logging.basicConfig(filename="../logs/qdraw.log", level=logging.INFO, format='%(name)s : %(levelname)-8s : %(message)s')
 logger = logging.getLogger(__name__)
 
 def log_execution_time(func):
@@ -137,6 +137,7 @@ class VectorStore:
     def __init__(self, persist_directory: Optional[str] = None):
         
         self.embedding_model = OllamaEmbeddings(model="nomic-embed-text")
+        self.persist_directory = persist_directory 
 
         if persist_directory and os.path.isdir(persist_directory):
             self.db = Chroma(
@@ -190,6 +191,13 @@ class VectorStore:
             ids=ids,
             embedding=self.embedding_model,
             persist_directory=persist_directory
+        )
+
+    def store_documents(self, documents: List[Document]) -> None:
+        self.db = Chroma.from_documents(
+            documents,
+            embedding=self.embedding_model,
+            persist_directory=self.persist_directory 
         )
 
     def extract_content(self, url: str) -> List[str]:
@@ -275,6 +283,9 @@ class Painter():
 
 
     def handle_instruction(self, instruction: Dict) -> None:
+
+        print_verbose(f"<info> Handle instruction: {instruction}")
+
         if 'draw_line' in instruction:
             # Unpack the points to be of type: List[tuple]
             points = [tuple(point) for point in instruction['draw_line']['points']]
@@ -347,6 +358,9 @@ class Painter():
 
         if 'clear_all' in instruction:
             self.clear_all()
+            return
+        
+        print_verbose(f"<error> Unknown instruction: {instruction}")
 
     def start(self):
         self.root.mainloop()

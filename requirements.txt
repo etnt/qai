@@ -3,6 +3,7 @@ langchain-community
 langchain-core
 langchainhub
 langchain-openai
+langchain-text-splitters
 chromadb
 bs4
 python-dotenv
@@ -14,6 +15,15 @@ PyPDF2
 googlesearch-python
 tk
 PythonTurtle
+llama_hub
+llama_index 
+braintrust 
+autoevals 
+pypdf 
+pillow 
+transformers 
+torch 
+torchvision
 
 
 

@@ -45,8 +45,9 @@ if not st.session_state['uploaded_files']:
             # Convert bytes to file-like object
             pdf_file = BytesIO(pdf_contents)
 
-            # Split PDF text into chunks
-            text_chunks = split_pdf_text(pdf_file)
+            if uploaded_file.type == "application/pdf":
+                # Split PDF text into chunks
+                text_chunks = split_pdf_text(pdf_file)
 
             # Add the chunks to the session state
             st.session_state['splits'].extend(text_chunks)
