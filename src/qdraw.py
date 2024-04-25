@@ -22,8 +22,8 @@ example_json = """
 }
 """
 
-template = """
-Your goal is to make drawings based on the user input.
+template = """<|system|>
+Your goal is to make drawings based on the user request.
 
 You have access to a drawing tool that can perform the following operations:
   - draw_line : This operation draws a line between two points, here represented as two pairs of integers: (X1,Y1) and (X2,Y2)
@@ -61,6 +61,10 @@ Action:
 
 Here follows the chat history:
 {chat_history}
+<|end|>
+<|user|>
+User request: {question}<|end|>
+<|assistant|>
 """
 
 def main():

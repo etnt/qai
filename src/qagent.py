@@ -25,8 +25,8 @@ You have access to these tools:
     - search: searches the web for the answer to the question
 
 You should first reflect with ‘Thought: {your_thoughts}’, then you either:
-    - if you don't know the answer: call a tool with the proper JSON formatting,
-    - if you know the answer: print your final answer starting with the prefix ‘Final Answer:’ 
+    - if you don't know the answer: call a tool with the proper JSON formatting, any reply from the tool can be found in the 'Observation' section.
+    - if you know the answer: print your final answer starting with the prefix: ‘Final Answer:’ 
 
 Here is an example of the JSON formatting for calling a tool:
 
@@ -76,11 +76,12 @@ def main():
                     print_verbose(f"<info> Performing Google search for: {query}")
                     v = VectorStore()
                     v.search_and_store(query)
-                    similarity_result = v.similarity_search(query=query, num_results=2)
+                    similarity_result = v.similarity_search(query=query, num_results=3)
                     search_result = "\n".join([result.page_content.strip() for result in similarity_result])
 
         if search_result:
             observation = f"Observation: {search_result}"
+            print_verbose(f"{observation}")
 
 
 if __name__ == "__main__":

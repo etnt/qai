@@ -30,6 +30,10 @@ qdad:
 qagent:
 	./pyvenv/bin/python3 ./src/qagent.py
 
+.PHONY: qvdb
+qvdb:
+	./pyvenv/bin/python3 ./src/qvdb.py
+
 .PHONY: qimdb
 qimdb:
 	./pyvenv/bin/python3 ./src/qimdb.py 
