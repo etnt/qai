@@ -31,11 +31,6 @@ from typing import (
 warnings.simplefilter('ignore', InsecureRequestWarning)
 
 
-# Get the value of the environment variable 'USE_MODEL'
-# If 'USE_MODEL' is not set or is empty, use a default model instead
-model = os.getenv('USE_MODEL', 'llama3')
-
-
 system="""
 You are a helpful AI assistant that helps answer questions based on documents and sources.
 You may combine your own knowledge with the information in the documents to answer the questions.
@@ -130,17 +125,19 @@ def extract_url_content(url: str) -> List[str]:
         return text_splits
 
 @log_execution_time
-def google_search(query: str, num_results: int = 5) -> List[str]:
+def google_search(query: str, num_results: int = 3) -> List[str]:
     """
     Performs a Google Search for documents related to the given query.
 
     Args:
         query (str): The query to search for documents.
-        num_results (int): The number of URLs to retrieve. Defaults to 5.
+        
+        results (int): The number of URLs to retrieve. Defaults to 5.
 
     Returns:
         List[str]: The URLs of the search results.
     """
+    query += " filetype:html"  # Only search for HTML files
     return search(query, num_results)
 
 
@@ -168,7 +165,7 @@ def store_documents(qvdb: VectorDB, text_splits: List[str], url: str) -> None:
 
 
 @log_execution_time
-def search_and_store(qvdb: VectorDB, query: str, num_results: int = 5) -> None:
+def search_and_store(qvdb: VectorDB, query: str, num_results: int = 3) -> None:
         """
         Performs a Google Search for documents related to the given query,
         extracts their content, and stores them in the vector store.
@@ -194,12 +191,15 @@ def parse_args() -> str:
     parser = argparse.ArgumentParser(description='Ask an AI model for answer to you question')
 
     parser.add_argument('-c', '--chat', action='store_true' , help='Chat mode (i.e not just a single question)')
-    parser.add_argument('-t', '--time', action='store_true' , help='Output some runtime info')
     parser.add_argument('-m', '--model', default='llama3', help='Use this Ollama model (default: llama3)')
+    parser.add_argument('--no-search', action='store_true' , help='Do not search for documents')
     parser.add_argument('--persist', nargs='?', const='QAI_DB', default=False, help='Persist/Reuse the VectorDB to/from disk (default: QAI_DB)')
     parser.add_argument('--pdf', type=str, help='PDF files, separated by comma (e.g. file1.pdf,file2.pdf). Requires --rag.')
     parser.add_argument('-q', '--question', type=str, help='Your question')
     parser.add_argument('-r', '--rag', action='store_true' , help='Enable RAG functionality')
+    parser.add_argument('-s', '--stream', action='store_true' , help='Enable streaming of the response')
+    parser.add_argument('-t', '--time', action='store_true' , help='Output some runtime info')
+    parser.add_argument('--temperature', type=float, default=0.2, help='Set the temperature for creativity (default: 0.2)')
     parser.add_argument('-v', '--verbose', action='store_true' , help='Output some debug info')
 
 
@@ -217,9 +217,26 @@ def parse_args() -> str:
 
     return args
 
+@log_execution_time
+def query_qvdb(qvdb: VectorDB, question, num_results=3) -> Dict[str, Any]:
+    return qvdb.query(question, num_results=num_results)
 
 @log_execution_time
-def call_ollama(model: str, system: str, prompt: str, stream: bool = False) -> Dict[str, Any]:
+def pick_results_from_qvdb(results: Dict[str, Any]) -> str:
+    docs=[]
+    for doc, src, dist in zip(results['documents'][0], results['metadatas'][0], results['distances'][0]):
+            docs.append(f"SOURCE: {src['source']}\nDOCUMENT: {doc}\n")
+            print_verbose(f"qvdb found source: {src['source']} ,at distance: {dist}\n")
+    return' '.join(docs)
+
+
+@log_execution_time
+def call_ollama(model: str, 
+                system: str, 
+                prompt: str, 
+                stream: bool = False, 
+                temperature: float = 0.2
+                ) -> Dict[str, Any]:
     """
     Calls the Ollama model with the given prompt.
 
@@ -228,11 +245,18 @@ def call_ollama(model: str, system: str, prompt: str, stream: bool = False) -> D
         system (str): The system text to prepend to the prompt.
         prompt (str): The prompt to send to the Ollama model.
         stream (bool): Whether to stream the response or not.
+        temperature (float): The temperature to use for creativity (variation).
 
     Returns:
         Dict[str, Any]: The response from the Ollama model.
     """
-    return ollama.generate(model=model, system=system, prompt=prompt, stream=stream)
+    return ollama.generate(
+            model=model,
+            system=system,
+            prompt=prompt,
+            stream=stream,
+            options={"temperature": temperature}
+        )
 
 
 
@@ -247,23 +271,31 @@ def main(args):
     question = args.question
 
     # Create a new VectorDB instance
-    qvdb = VectorDB(is_persistent=False)
+    if args.persist:
+        qvdb = VectorDB(db_directory=args.persist,
+                        is_persistent=True
+                        )
+    else:
+        qvdb = VectorDB(is_persistent=False)
 
     # Search for documents related to the question and store them in the VectorDB
-    search_and_store(qvdb=qvdb, query=question, num_results=5)
-    results = qvdb.query(question, num_results=5)
+    if not args.no_search:
+        search_and_store(qvdb=qvdb, query=question, num_results=3)
+
+    # Query the VectorDB with the question
+    results = query_qvdb(qvdb, question, num_results=3)
 
     # Extract the documents and sources from the results
-    docs=[]
-    for d, s in zip(results['documents'][0], results['metadatas'][0]):
-            docs.append(f"SOURCE: {s['source']}\nDOCUMENT: {d}\n")
-    documents = ' '.join(docs)
+    documents = pick_results_from_qvdb(results)
 
     # Generate the response
     prompt = template.format(question=question, documents=documents)
-    output = call_ollama(model=model, system=system, prompt=prompt, stream=False)
+    output = call_ollama(model=args.model, 
+                         system=system, 
+                         prompt=prompt, 
+                         stream=args.stream, 
+                         temperature=args.temperature)
     response = output['response'].strip()
-    print_verbose(f"Response: {response}")
 
     if not args.verbose and not args.time:
         # Stop the spinner
@@ -272,8 +304,6 @@ def main(args):
     # Print the response
     print(response)
 
-    # Reset the VectorDB
-    qvdb.reset()
 
 
 if __name__ == '__main__':

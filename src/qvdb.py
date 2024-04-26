@@ -51,7 +51,7 @@ class VectorDB:
         
         self.client = chromadb.Client(settings=self.client_settings)
 
-        self.collection = self.client.create_collection(
+        self.collection = self.client.get_or_create_collection(
             name=collection_name,
             metadata={"hnsw:space": "cosine"}, # l2 is the default
             embedding_function=self.embedding_func,
@@ -149,4 +149,3 @@ present a singularly formidable appearance.
         print(f"\nParagraph: {p}\n  {d}\n")
     #print(results)
     qvdb.reset()
-    
