@@ -4,6 +4,8 @@ langchain-core
 langchainhub
 langchain-openai
 langchain-text-splitters
+langchain-nomic
+langgraph
 chromadb
 bs4
 python-dotenv
@@ -25,6 +27,10 @@ transformers
 torch 
 torchvision
 sentence_transformers
+tiktoken
+tavily-python
+gpt4all
+firecrawl-py
 
 
 
