@@ -14,6 +14,7 @@ streamlit
 watchdog
 gradio
 PyPDF2
+pymupdf
 googlesearch-python
 tk
 PythonTurtle
