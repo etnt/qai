@@ -8,6 +8,14 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.chat_models import ChatOllama
+from langchain_community.document_loaders.pdf import PyMuPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# Set the embedding model to be used; note that the result may vary
+# a lot depending on the model used.
+embedding_model = "nomic-embed-text"
+#embedding_model = "chroma/all-minilm-l6-v2-f32"
+#embedding_model = "snowflake-arctic-embed"
 
 # Function to split PDF text into chunks
 def split_pdf_text(pdf_file):
@@ -18,6 +26,15 @@ def split_pdf_text(pdf_file):
         page = pdf_reader.pages[page_number]
         text_chunks.append(page.extract_text())
     return text_chunks
+
+def split_pdf_docs(pdf_file):
+    te_text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        model_name="gpt-4",
+        chunk_size=500,
+        chunk_overlap=0,
+    )
+    loader = PyMuPDFLoader(pdf_file)
+    return loader.load_and_split(text_splitter=te_text_splitter)
 
 st.set_page_config(page_title="Ask your PDFs")
 st.header("Ask your PDFs 💬")
@@ -39,6 +56,7 @@ if not st.session_state['uploaded_files']:
         st.session_state['files_uploaded'] = True
 
         for uploaded_file in uploaded_files:
+            print(f"Uploaded file: {uploaded_file.name}")
             # Read the file contents
             pdf_contents = uploaded_file.read()
             
@@ -47,7 +65,8 @@ if not st.session_state['uploaded_files']:
 
             if uploaded_file.type == "application/pdf":
                 # Split PDF text into chunks
-                text_chunks = split_pdf_text(pdf_file)
+                #text_chunks = split_pdf_text(pdf_file)
+                text_chunks = split_pdf_docs(uploaded_file.name) # Hack! not a full path
 
             # Add the chunks to the session state
             st.session_state['splits'].extend(text_chunks)
@@ -55,9 +74,11 @@ if not st.session_state['uploaded_files']:
 # Load the embeddings
 if st.session_state['splits']:
     # Pass the text chunks directly to Chroma
-    vectorstore = Chroma.from_texts(
-        texts=st.session_state['splits'],
-        embedding=OllamaEmbeddings(model="nomic-embed-text")
+    #vectorstore = Chroma.from_texts(
+    vectorstore = Chroma.from_documents(
+        #texts=st.session_state['splits'],
+        st.session_state['splits'],
+        embedding=OllamaEmbeddings(model=embedding_model)
     )
     retriever = vectorstore.as_retriever()
 
